@@ -18,11 +18,14 @@ Before installing, ensure you have the following software installed on your Wind
    - Download from [python.org](https://www.python.org/downloads/release/python-3119/).
    - During installation, check "Add Python 3.11 to PATH" and install for all users.
    - Verify with: `python --version` (should output `Python 3.11.9`).
+   - it MUST be Python 3.11 (Python 3.13 is not compatible, nor is 3.10)
 
 2. **Ollama**:
    - Download and install from [ollama.com](https://ollama.com/download).
    - Install the `gemma3:4b` model by running: `ollama pull gemma3:4b`.
    - Ensure Ollama is running (`ollama serve`) and accessible at `http://localhost:11434`.
+   - You can use a different model if you wish, but the default script is set to use the `gemma3:4b` model.
+   - And use a separate CMD console window, which doesn't need to have a VENV active, to run the `ollama serve` command (As it doesn't allow further input to that CMD window when running. So run the main Python script in its own VENV activated CMD console window)
 
 3. **Git** (optional, for cloning the repository):
    - Download from [git-scm.com](https://git-scm.com/download/win).
@@ -70,11 +73,11 @@ Follow these steps in order to set up the project:
      ```
 
 5. **Verify Ollama Setup**:
-   - Start Ollama in a separate terminal:
+   - Start Ollama in a separate (Not in the VENV activated terminal, but its own terminal) terminal:
      ```bash
      ollama serve
      ```
-   - Confirm the `gemma3:4b` model is installed:
+   - Confirm the `gemma3:4b` model is installed (Depending on how your Ollama is installed, you may need to close the CMD console window you ran ollama serve in, to run Ollama in the system-tray instead. Then after installing a new model to Ollama close the system-tray version of Ollama again and open a CMD console window and run the Ollama Serve command. You don't need a VENV for the Ollama Serve command. Sorry for this complication, but I'm new to Python and had help from an AI-LLM to complete this project, so it may be a bit messy):
      ```bash
      ollama list
      ```
@@ -84,7 +87,7 @@ Follow these steps in order to set up the project:
      ```
 
 6. **Download Coqui TTS Model**:
-   - The script automatically downloads `tts_models/en/vctk/vits` to `C:\Users\<YourUsername>\.cache\tts` on first run. Ensure ~2GB free space.
+   - The script automatically downloads `tts_models/en/vctk/vits` to `C:\Users\<YourUsername>\.cache\tts` on first run (Keep an eye on the CMD console window as you may have to press [Y] to accept the license-term for the TTS on the very first run). Ensure ~2GB free space.
 
 ## Running the Application
 1. **Activate the Virtual Environment** (if not already active):
@@ -93,12 +96,12 @@ Follow these steps in order to set up the project:
    venv\Scripts\activate
    ```
 
-2. **Start Ollama** (if not running):
+2. **Start Ollama** (if not running. And, again, this must be done in a different CMD console window and not the one with the VENV activated):
    ```bash
    ollama serve
    ```
 
-3. **Run the Script**:
+3. **Run the Script** (This is done in the VENV activated CMD console window. And be patient as it may take some time to load the LLM. On first run you should check the CMD console window to see if you need to accept the TTS license):
    ```bash
    python llm_radio_theater_CPUonly_Example_HusbondAndWife.py
    ```
@@ -113,7 +116,7 @@ Follow these steps in order to set up the project:
 **Expected Output**:
 - Console: Lists `Using device for TTS: cpu` and ~110 VITS speaker IDs (e.g., `p225`, `p231`).
 - GUI: Displays dialogue with proper spacing (e.g., “Darling, it’s utterly absurd…”).
-- TTS: Pronounces contractions correctly (e.g., “it’s” as “it is”), ~10–20 seconds per sentence.
+- TTS: Pronounces (Not always, for some reason) contractions correctly (e.g., “it’s” as “it is”), ~10–20 seconds per sentence.
 - Text File: Saves dialogue to `llm_conversation.txt` with correct formatting.
 
 ## Customization
@@ -157,7 +160,7 @@ Follow these steps in order to set up the project:
   - Ensure 16GB+ RAM to avoid slowdowns.
 - **Logs**:
   - Check `llm_conversation.txt` for dialogue history.
-  - Share console output, GUI text, or errors via GitHub Issues if problems occur.
+  - Share console output, GUI text, or errors via GitHub Issues if problems occur (Hopefully somebody smarter than me can then help. Or you can show the problem to an LLM and see if it can guide you further)
 
 ## Contributing
 Feel free to fork the repository, make improvements, and submit pull requests. Report issues via [GitHub Issues](https://github.com/JELSTUDIO/JEL_LLMradiotheater_Ollama/issues).
