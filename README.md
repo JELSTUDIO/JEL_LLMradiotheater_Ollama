@@ -47,7 +47,7 @@ Follow these steps in order to set up the project:
 
 2. **Create a Virtual Environment**:
    ```bash
-   python -m venv venv
+   python3.11 -m venv venv
    ```
 
 3. **Activate the Virtual Environment**:
