@@ -1,6 +1,6 @@
-# LLM Radio Theater
+# JEL LLM Radio Theater
 
-LLM Radio Theater is a Python application that creates a dynamic, spoken dialogue between two AI characters using the Ollama language model (`gemma3:4b`) and Coqui TTS (`tts_models/en/vctk/vits`). The characters engage in a conversational debate, with one embodying an overtly feminine perspective (favoring domestic aesthetics like living rooms) and the other an overtly manly perspective (favoring practical spaces like garages). The dialogue is displayed in a Tkinter GUI, spoken aloud via text-to-speech, and saved to a text file (`llm_conversation.txt`).
+JEL LLM Radio Theater is a Python application that creates a dynamic, spoken dialogue between two AI characters using the Ollama language model (`gemma3:4b`) and Coqui TTS (`tts_models/en/vctk/vits`). The characters engage in a conversational debate, with one embodying an overtly feminine perspective (favoring domestic aesthetics like living rooms) and the other an overtly manly perspective (favoring practical spaces like garages). The dialogue is displayed in a Tkinter GUI, spoken aloud via text-to-speech, and saved to a text file (`llm_conversation.txt`).
 
 ## Features
 - Two AI characters with distinct personalities, powered by `gemma3:4b` via Ollama.
@@ -38,8 +38,8 @@ Follow these steps in order to set up the project:
 
 1. **Clone the Repository** (or download as a ZIP):
    ```bash
-   git clone https://github.com/<your-username>/llm-radio-theater.git
-   cd llm-radio-theater
+   git clone https://github.com/JELSTUDIO/JEL_LLMradiotheater_Ollama.git
+   cd JEL_LLMradiotheater_Ollama
    ```
 
 2. **Create a Virtual Environment**:
@@ -53,7 +53,11 @@ Follow these steps in order to set up the project:
    ```
 
 4. **Install Dependencies**:
-   - Save the following as `requirements.txt` in the project directory:
+   - The repository includes `requirements_CPUonly.txt`. Install with:
+     ```bash
+     pip install -r requirements_CPUonly.txt
+     ```
+   - Contents of `requirements_CPUonly.txt`:
      ```
      coqui-tts==0.26.2
      torch==2.7.1
@@ -63,10 +67,6 @@ Follow these steps in order to set up the project:
      networkx==3.5
      simpleaudio==1.0.4
      requests==2.32.4
-     ```
-   - Install with:
-     ```bash
-     pip install -r requirements.txt
      ```
 
 5. **Verify Ollama Setup**:
@@ -89,7 +89,7 @@ Follow these steps in order to set up the project:
 ## Running the Application
 1. **Activate the Virtual Environment** (if not already active):
    ```bash
-   cd <path-to-llm-radio-theater>
+   cd JEL_LLMradiotheater_Ollama
    venv\Scripts\activate
    ```
 
@@ -100,7 +100,7 @@ Follow these steps in order to set up the project:
 
 3. **Run the Script**:
    ```bash
-   python llm_radio_theater.py
+   python llm_radio_theater_CPUonly_Example_HusbondAndWife.py
    ```
 
 4. **Interact with the GUI**:
@@ -118,7 +118,7 @@ Follow these steps in order to set up the project:
 
 ## Customization
 - **Change Voices**:
-  - Edit `llm_radio_theater.py` to use different VITS speaker IDs (e.g., `p226` for female, `p240` for male):
+  - Edit `llm_radio_theater_CPUonly_Example_HusbondAndWife.py` to use different VITS speaker IDs (e.g., `p226` for female, `p240` for male):
     ```python
     SPEAKER_1 = "p226"  # Female
     SPEAKER_2 = "p240"  # Male
@@ -131,17 +131,17 @@ Follow these steps in order to set up the project:
 - **Change Topic or Prompts**:
   - Modify `INITIAL_TOPIC` in the script, e.g.:
     ```python
-    INITIAL_TOPIC = "Have a talk about whether the Amiga or the PC is a better computer."
+    INITIAL_TOPIC = "What do you want to talk about today?"
     ```
   - Update system prompts for different perspectives, e.g.:
     ```python
-    SYSTEM_PROMPT_1 = "You are a fanatical fan of PC computers. Disagree with pro-Amiga opinions. Speak concisely."
-    SYSTEM_PROMPT_2 = "You are a fanatical fan of Amiga computers. Disagree with pro-PC opinions. Speak concisely."
+    SYSTEM_PROMPT_1 = "You are the wife in the relationship."
+    SYSTEM_PROMPT_2 = "You are the husbond in the relationship."
     ```
 
 ## Troubleshooting
 - **GUI Spacing Issues**:
-  - Ensure you’re using the latest `llm_radio_theater.py` script.
+  - Ensure you’re using the latest `llm_radio_theater_CPUonly_Example_HusbondAndWife.py`.
   - Verify Python 3.11.9: `python --version`.
 - **TTS Errors**:
   - Test audio playback:
@@ -157,10 +157,10 @@ Follow these steps in order to set up the project:
   - Ensure 16GB+ RAM to avoid slowdowns.
 - **Logs**:
   - Check `llm_conversation.txt` for dialogue history.
-  - Share console output, GUI text, or errors if issues persist.
+  - Share console output, GUI text, or errors via GitHub Issues if problems occur.
 
 ## Contributing
-Feel free to fork the repository, make improvements, and submit pull requests. Report issues via GitHub Issues.
+Feel free to fork the repository, make improvements, and submit pull requests. Report issues via [GitHub Issues](https://github.com/JELSTUDIO/JEL_LLMradiotheater_Ollama/issues).
 
 ## License
 MIT License. See [LICENSE](LICENSE) for details.

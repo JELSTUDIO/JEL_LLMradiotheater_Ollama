@@ -1,0 +1,8 @@
+coqui-tts==0.26.2
+torch==2.7.1
+numpy==2.2.6
+gruut==2.4.0
+coqpit-config==0.2.0
+networkx==3.5
+simpleaudio==1.0.4
+requests==2.32.4
