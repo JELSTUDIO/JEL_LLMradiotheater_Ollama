@@ -1,6 +1,6 @@
 # JEL LLM Radio Theater
 
-JEL LLM Radio Theater is a Python application that creates a dynamic, spoken dialogue between two AI characters using the Ollama language model (`gemma3:4b`) and Coqui TTS (`tts_models/en/vctk/vits`). The characters engage in a conversational debate, with one embodying an overtly feminine perspective (favoring domestic aesthetics like living rooms) and the other an overtly manly perspective (favoring practical spaces like garages). The dialogue is displayed in a Tkinter GUI, spoken aloud via text-to-speech, and saved to a text file (`llm_conversation.txt`).
+JEL LLM Radio Theater is a Python application that creates a dynamic, spoken dialogue between two AI characters using the Ollama language model (`gemma3:4b`) and Coqui TTS (`tts_models/en/vctk/vits`). The characters engage in a conversational debate, with one embodying a female perspective (And female voice) and the other a male perspective (And male voice). The dialogue is displayed in a Tkinter GUI, spoken aloud via text-to-speech, and saved to a text file (`llm_conversation.txt`).
 
 ## Features
 - Two AI characters with distinct personalities, powered by `gemma3:4b` via Ollama.
