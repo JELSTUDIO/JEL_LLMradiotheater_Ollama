@@ -11,6 +11,9 @@ JEL LLM Radio Theater is a Python application that creates a dynamic, spoken dia
 - CPU-only execution for broad compatibility.
 - Customizable system prompts, topics, and speaker voices.
 
+## Demo
+[Watch Demo Video](https://www.youtube.com/watch?v=4ewAkuwVEQA)
+
 ## Prerequisites
 Before installing, ensure you have the following software installed on your Windows system:
 
