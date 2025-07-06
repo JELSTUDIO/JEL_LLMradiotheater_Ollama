@@ -118,6 +118,21 @@ class LLMDuetApp:
         self.start_time = None
 
 
+    def reset(self):
+        self.running = False
+        self.paused = False
+        self.wrapping_up = False
+        self.wrap_stage = 0
+        self.speaker = 0
+        self.history_1 = [{"role": "user", "content": INITIAL_TOPIC}]
+        self.history_2 = [{"role": "user", "content": INITIAL_TOPIC}]
+        self.timer_label.config(text="⏱ 600s")
+        self.start_button.config(text="Start")
+        self.pause_button.config(text="Pause")
+        self.text_area.delete("1.0", tk.END)
+        self.start_time = None
+
+
     def create_widgets(self):
         self.root.configure(bg="#1e1e1e")
         self.text_area = scrolledtext.ScrolledText(
@@ -152,14 +167,16 @@ class LLMDuetApp:
 
 
     def toggle_run(self):
-        self.running = not self.running
-        self.start_button.config(text="Stop" if self.running else "Start")
-        if self.running:
+        if not self.running:
+            self.reset()  # Reset everything
+            self.running = True
+            self.start_button.config(text="Stop")
             self.start_time = time.time()
-            self.timer_label.config(text="⏱ 600s")  # Reset display
             threading.Thread(target=self.conversation_thread, daemon=True).start()
             threading.Thread(target=self.monitor_timer, daemon=True).start()
         else:
+            self.running = False
+            self.start_button.config(text="Start")
             self.timer_label.config(text="⏱ --")
 
     def toggle_pause(self):
