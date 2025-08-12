@@ -1,5 +1,9 @@
 # JEL LLM Radio Theater, special NASA fictional mission edition with extra sound-effects
 
+Demo video on Youtube:
+
+[![Watch demo video](https://img.youtube.com/vi/SdbZNV4STAE/0.jpg)](https://www.youtube.com/watch?v=SdbZNV4STAE)
+
 First follow the installation-instructions for version 2.0.0 (The Chatterbox-GPU version on the main page)
 
 Then, when you have that set-up, follow the installation-instructions below to get version 2.1.0 which is required to run the fictional NASA radio-play.
@@ -71,3 +75,4 @@ Follow these steps in order to update v2.0.0 to v2.1.0 (This will not break v2.0
 
 ## License
 NASA sound-files are public-domain but NOT for commercial purposes.
+
