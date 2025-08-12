@@ -1,18 +1,17 @@
 # JEL LLM Radio Theater
 
-JEL LLM Radio Theater is a Python application that creates a dynamic, spoken dialogue between two AI characters using the Ollama language model (`gemma3:4b`) and Coqui TTS (`tts_models/en/vctk/vits`). The characters engage in a conversational debate, with one embodying a female perspective (And female voice) and the other a male perspective (And male voice). The dialogue is displayed in a Tkinter GUI, spoken aloud via text-to-speech, and saved to a text file (`llm_conversation.txt`).
+JEL LLM Radio Theater is a Python application that creates a dynamic, spoken dialogue between two AI characters using the Ollama language model (`gemma3:4b`) and either Coqui TTS (`tts_models/en/vctk/vits`) or Chatterbox TTS with voice-cloning. The characters engage in a conversational debate, with one embodying a female perspective (And female voice) and the other a male perspective (And male voice). If you use Chatterbox you can use wave-files to have two of your own voices used. The dialogue is displayed in a Tkinter GUI, spoken aloud via text-to-speech, and saved to a text file (`llm_conversation.txt`).
 
 ## Features
 - Two AI characters with distinct personalities, powered by `gemma3:4b` via Ollama.
 - Text-to-speech using Coqui TTS with VITS multi-speaker model (~110 voices).
+- Text-to-speech alternative using Chatterbox TTS with voice-cloning via two wave-files (This way you can have any voice you want).
 - Tkinter GUI for real-time dialogue display.
 - Saves conversation to `llm_conversation.txt`.
-- Handles contractions (e.g., “we’re” → “we are”) for accurate pronunciation.
-- CPU-only execution for broad compatibility.
-- Customizable system prompts, topics, and speaker voices.
-
-## Demo
-[Watch Demo Video](https://www.youtube.com/watch?v=4ewAkuwVEQA)
+- For Coqui TTS; Handles contractions (e.g., “we’re” → “we are”) for accurate pronunciation (This is switched OFF by default when using Chatterbox, but can be enabled if needed/wanted by editing the .py file).
+- For Coqui TTS; CPU-only execution for broad compatibility.
+- For Chatterbox TTS; Defaults to using GPU but will use CPU if GPU is unavailable.
+- Customizable system prompts, topics, and speaker voices (Primarily by editing the .py file, but topics can be modified during runtime via the GUI)
 
 ## Prerequisites
 Before installing, ensure you have the following software installed on your Windows system:
@@ -36,8 +35,8 @@ Before installing, ensure you have the following software installed on your Wind
 
 4. **System Requirements**:
    - Windows 10 or 11 (tested on Windows 11).
-   - 16GB+ RAM recommended (TTS and LLM require ~4–8GB).
-   - ~10GB free disk space for Python, dependencies, and models.
+   - 16GB+ RAM recommended (Coqui TTS and LLM require ~4–8GB. Unsure about minimum RAM when using Chatterbox, but definitely works on 16GB VRAM).
+   - ~10GB free disk space for Python, dependencies, and models (Maybe more if using Chatterbox)
 
 ## Installation
 Follow these steps in order to set up the project:
@@ -50,7 +49,7 @@ Follow these steps in order to set up the project:
 
 2. **Create a Virtual Environment**:
    ```bash
-   python3.11 -m venv venv
+   python -m venv venv
    ```
 
 3. **Activate the Virtual Environment**:
@@ -59,11 +58,11 @@ Follow these steps in order to set up the project:
    ```
 
 4. **Install Dependencies**:
-   - The repository includes `requirements_CPUonly.txt`. Install with:
+   - The repository includes `requirements_CPUonly.txt`, which you also need to install even if you only want to use the new GPU/Chatterbox-version. Install with:
      ```bash
      pip install -r requirements_CPUonly.txt
      ```
-   - Contents of `requirements_CPUonly.txt`:
+   - Contents of `requirements_CPUonly.txt` (You can delete the 'coqui-tts' line if you only want to use Chatterbox):
      ```
      coqui-tts==0.26.2
      torch==2.7.1
@@ -74,13 +73,27 @@ Follow these steps in order to set up the project:
      simpleaudio==1.0.4
      requests==2.32.4
      ```
+   - Then install Chatterbox (Keep the VENV, that you installed the requirements into, active, so Chatterbox is installed into it) with:
+     ```bash
+     pip3 install chatterbox-tts
+     ```
+
+4.1 **Install Dependencies for RXT50 series GPU support** (Skip this 4.1 section if you only want to use CPU):
+   - First uninstall CPU-based torch. Uninstall with:
+     ```bash
+     pip3 uninstall torch torchvision torchaudio
+     ```
+   - Then install GPU-based torch. For CUDA 12.8 install with:
+     ```bash
+     pip3 install torch torchaudio --index-url https://download.pytorch.org/whl/cu128
+     ```
 
 5. **Verify Ollama Setup**:
    - Start Ollama in a separate (Not in the VENV activated terminal, but its own terminal) terminal:
      ```bash
      ollama serve
      ```
-   - Confirm the `gemma3:4b` model is installed (Depending on how your Ollama is installed, you may need to close the CMD console window you ran ollama serve in, to run Ollama in the system-tray instead. Then after installing a new model to Ollama close the system-tray version of Ollama again and open a CMD console window and run the Ollama Serve command. You don't need a VENV for the Ollama Serve command. Sorry for this complication, but I'm new to Python and had help from an AI-LLM to complete this project, so it may be a bit messy):
+   - Confirm the `gemma3:4b` model (The new GPU-based script uses `gemma3:12b`, but you can change model in the .py file) is installed (Depending on how your Ollama is installed, you may need to close the CMD console window you ran ollama serve in, to run Ollama in the system-tray instead. Then after installing a new model to Ollama close the system-tray version of Ollama again and open a CMD console window and run the Ollama Serve command. You don't need a VENV for the Ollama Serve command. Sorry for this complication, but I'm new to Python and had help from an AI-LLM to complete this project, so it may be a bit messy):
      ```bash
      ollama list
      ```
@@ -91,6 +104,7 @@ Follow these steps in order to set up the project:
 
 6. **Download Coqui TTS Model**:
    - The script automatically downloads `tts_models/en/vctk/vits` to `C:\Users\<YourUsername>\.cache\tts` on first run (Keep an eye on the CMD console window as you may have to press [Y] to accept the license-term for the TTS on the very first run). Ensure ~2GB free space.
+   - If you haven't already got Chatterbox, then it will download its needed models to `C:\Users\<YourUsername>\.cache\huggingface\hub\models--ResembleAI--chatterbox` on first run.
 
 ## Running the Application
 1. **Activate the Virtual Environment** (if not already active):
@@ -104,16 +118,23 @@ Follow these steps in order to set up the project:
    ollama serve
    ```
 
-3. **Run the Script** (This is done in the VENV activated CMD console window. And be patient as it may take some time to load the LLM. On first run you should check the CMD console window to see if you need to accept the TTS license):
-   ```bash
-   python llm_radio_theater_CPUonly_Example_HusbondAndWife.py
-   ```
+3. **Run the Script** (This is done in the VENV activated CMD console window. And be patient as it may take some time to load the LLM and, when using Chatterbox, generate the speeches. On first run you should check the CMD console window to see if you need to accept the TTS license):
+   - This is for the CPU-based Coqui TTS, run:
+     ```bash
+     python llm_radio_theater_CPUonly_Example_HusbondAndWife.py
+     ```
+   - For the new GPU-based Chatterbox TTS, run:
+     ```bash
+     python llm_radio_theater_GPU_Example_HusbondAndWife.py
+     ```
 
 4. **Interact with the GUI**:
    - **Start**: Begins the dialogue between the Woman (pro-living room) and Man (pro-garage).
    - **Pause/Resume**: Pauses or resumes the conversation.
    - **Change Topic**: Enter a new topic for the characters to discuss.
    - **TTS: On/Off**: Toggles text-to-speech.
+   - **WRAP**: Click this when you want the conversation to begin to wrap up with a natural ending.
+   - **TIMER**: This will count down in seconds to an automatic wrap-up of the conversation so it doesn't continue forever (In the new GPU-script it defaults to 3600 seconds, but you can modify this in the .py file)
    - Output appears in the GUI, is spoken aloud, and is saved to `llm_conversation.txt`.
 
 **Expected Output**:
@@ -124,7 +145,7 @@ Follow these steps in order to set up the project:
 
 ## Customization
 - **Change Voices**:
-  - Edit `llm_radio_theater_CPUonly_Example_HusbondAndWife.py` to use different VITS speaker IDs (e.g., `p226` for female, `p240` for male):
+  - For Coqui TTS; Edit `llm_radio_theater_CPUonly_Example_HusbondAndWife.py` to use different VITS speaker IDs (e.g., `p226` for female, `p240` for male):
     ```python
     SPEAKER_1 = "p226"  # Female
     SPEAKER_2 = "p240"  # Male
@@ -132,6 +153,11 @@ Follow these steps in order to set up the project:
   - Test voices:
     ```bash
     python -c "from TTS.api import TTS; tts = TTS(model_name='tts_models/en/vctk/vits').to('cpu'); tts.tts_to_file(text='This is a test.', speaker='p226', file_path='test_p226.wav')"
+    ```
+  - For Chatterbox TTS; Change file-names in the script so they match the name of the wave-files with the voice-snippets you want to clone:
+    ```python
+    self.voice_female = "voice_female.wav"
+    self.voice_male = "voice_male.wav"
     ```
 
 - **Change Topic or Prompts**:
@@ -143,6 +169,14 @@ Follow these steps in order to set up the project:
     ```python
     SYSTEM_PROMPT_1 = "You are the wife in the relationship."
     SYSTEM_PROMPT_2 = "You are the husbond in the relationship."
+    ```
+  - In the new GPU-script it's moved to `self.history` 1 (Female, first speaker) and 2 (Male, second speaker), e.g.:
+    ```python
+    self.history_1 = [{"role": "user", "content": "Start by telling me your name and who you are."}]
+    ```
+  - In the new GPU-script it's moved to `self.system_prompt` 1 (Female, first speaker) and 2 (Male, second speaker), e.g.:
+    ```python
+    self.system_prompt_1 = ("You are Jane, the current wife of John. ")
     ```
 
 ## Troubleshooting
