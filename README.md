@@ -2,6 +2,11 @@
 
 JEL LLM Radio Theater is a Python application that creates a dynamic, spoken dialogue between two AI characters using the Ollama language model (`gemma3:4b`) and either Coqui TTS (`tts_models/en/vctk/vits`) or Chatterbox TTS with voice-cloning. The characters engage in a conversational debate, with one embodying a female perspective (And female voice) and the other a male perspective (And male voice). If you use Chatterbox you can use wave-files to have two of your own voices used. The dialogue is displayed in a Tkinter GUI, spoken aloud via text-to-speech, and saved to a text file (`llm_conversation.txt`).
 
+## New in v2.2.0 (The lastest version)
+- Chatterbox is now fully articulated by the script, making for more expressive speech.
+- Plays background-music while waiting for the LLM to generate text (If you don't want that, just save a short silent wav-file with this name: `pictureambience_JEL1.wav`. The current song used is made by JEL and is inspired by one composed by Guy Whitmore for the 1995 PC-game named: `Shivers`.) and plays a low tone at every LLM turn-switch.
+- Chatterbox' speech-output is saved as time- and name-stamped wav-files in the sub-folder `audio_output` (One file for each turn, to avoid the silence while waiting for text to be generated. Join them in an audio-editor if you want to re-create the full spoken conversation).
+
 ## Features
 - Two AI characters with distinct personalities, powered by `gemma3:4b` via Ollama.
 - Text-to-speech using Coqui TTS with VITS multi-speaker model (~110 voices).
@@ -77,6 +82,10 @@ Follow these steps in order to set up the project:
      ```bash
      pip3 install chatterbox-tts
      ```
+   - To use version 2.2.0 (Or the specific NASA version, which is version 2.1.0) you must also install this new sound-engine (Still with the VENV active). This switches the audio playback system from simpleaudio to pygame, which is required for the new sound-effects to work. If you ONLY want to use version 2.0.0, which is the Coqui-TTS version (Without Chatterbox support), then you can skip this step:
+     ```bash
+     pip3 install pygame
+     ```
 
 4.1 **Install Dependencies for RXT50 series GPU support** (Skip this 4.1 section if you only want to use CPU):
    - First uninstall CPU-based torch. Uninstall with:
@@ -93,13 +102,15 @@ Follow these steps in order to set up the project:
      ```bash
      ollama serve
      ```
-   - Confirm the `gemma3:4b` model (The new GPU-based script uses `gemma3:12b`, but you can change model in the .py file) is installed (Depending on how your Ollama is installed, you may need to close the CMD console window you ran ollama serve in, to run Ollama in the system-tray instead. Then after installing a new model to Ollama close the system-tray version of Ollama again and open a CMD console window and run the Ollama Serve command. You don't need a VENV for the Ollama Serve command. Sorry for this complication, but I'm new to Python and had help from an AI-LLM to complete this project, so it may be a bit messy):
+   - Confirm the `gemma3:4b` model (The new version 2.2.0 GPU-based script uses `gemma3:12b` and `llama3.1:8b`, but you can change model in the .py file if you don't have those 2 installed. You can actually use any model you have installed, just make sure you enter its correct name in the script) is installed (Depending on how your Ollama is installed, you may need to close the CMD console window you ran ollama serve in, to run Ollama in the system-tray instead. Then after installing a new model to Ollama close the system-tray version of Ollama again and open a CMD console window and run the Ollama Serve command. You don't need a VENV for the Ollama Serve command. Sorry for this complication, but I'm new to Python and had help from AI-LLMs (Microsoft CoPilot and xAI's Grok) to complete this project, so it may be a bit messy):
      ```bash
      ollama list
      ```
    - If not installed, run:
      ```bash
      ollama pull gemma3:4b
+     ollama pull gemma3:12b
+     ollama pull llama3.1:8b
      ```
 
 6. **Download Coqui TTS Model**:
@@ -113,19 +124,23 @@ Follow these steps in order to set up the project:
    venv\Scripts\activate
    ```
 
-2. **Start Ollama** (if not running. And, again, this must be done in a different CMD console window and not the one with the VENV activated):
+2. **Start Ollama** (if not running. And, again, this must be done in a different CMD console window and not the one with the VENV activated. To be clear; this is NOT the Ollama-program that opens its own Ollama chat-box GUI and places a lama-icon in the windows task-bar or notification-area! If you have that open you must close it, or else the Ollama server won't be available to serve this conversation script):
    ```bash
    ollama serve
    ```
 
 3. **Run the Script** (This is done in the VENV activated CMD console window. And be patient as it may take some time to load the LLM and, when using Chatterbox, generate the speeches. On first run you should check the CMD console window to see if you need to accept the TTS license):
-   - This is for the CPU-based Coqui TTS, run:
+   - This is for the CPU-based Coqui TTS, version 2.0.0, run:
      ```bash
      python llm_radio_theater_CPUonly_Example_HusbondAndWife.py
      ```
-   - For the new GPU-based Chatterbox TTS, run:
+   - For the version 2.1.0 GPU-based Chatterbox TTS, run:
      ```bash
      python llm_radio_theater_GPU_Example_HusbondAndWife.py
+     ```
+   - For the version 2.2.0 GPU-based Chatterbox TTS, run:
+     ```bash
+     python llm_radio_theater_v2.2.0_Chatterbox_GPUandCPU_Example_HusbondAndWife.py
      ```
 
 4. **Interact with the GUI**:
@@ -134,14 +149,17 @@ Follow these steps in order to set up the project:
    - **Change Topic**: Enter a new topic for the characters to discuss.
    - **TTS: On/Off**: Toggles text-to-speech.
    - **WRAP**: Click this when you want the conversation to begin to wrap up with a natural ending.
-   - **TIMER**: This will count down in seconds to an automatic wrap-up of the conversation so it doesn't continue forever (In the new GPU-script it defaults to 3600 seconds, but you can modify this in the .py file)
-   - Output appears in the GUI, is spoken aloud, and is saved to `llm_conversation.txt`.
+   - **Timer Enforce**: If ON, the script will auto-wrap when the countdown reaches zero. If OFF the script will continue indefinitely (So if a conversation heads in an interesting direction and you want it to continue, click this to OFF to ignore the countdown timer)
+   - **TIMER**: This will count down in seconds to an automatic wrap-up of the conversation so it doesn't continue forever (In the v2.2.0 script it defaults to 3600 seconds, but you can modify this in the .py file)
+   - **Chatterbox sliders**: These will adjust how the 2 Chatterbox-voices speaks (How dramatic they sound, and how quick the talk) Adjust them to taste (And if you want you can update the defaults inside the script to your preferred values, as different voices may need different values to sound normal. Chatterbox' internal default values are 0.5 for both sliders, which is the setting that will be the safest against mis-spoken words or 'hallucination-talk')
+   - Output appears in the GUI, is spoken aloud, and is saved to `llm_conversation.txt` (In version 2.2.0 the text-file is cleared/emptied when you first run the script so only the latest conversation-transcript is stored. So if you want to keep older conversation-transcripts, make sure to copy this file or its contents before running the script).
 
 **Expected Output**:
 - Console: Lists `Using device for TTS: cpu` and ~110 VITS speaker IDs (e.g., `p225`, `p231`).
 - GUI: Displays dialogue with proper spacing (e.g., “Darling, it’s utterly absurd…”).
-- TTS: Pronounces (Not always, for some reason) contractions correctly (e.g., “it’s” as “it is”), ~10–20 seconds per sentence.
+- Coqui-TTS: Pronounces (Not always, for some reason) contractions correctly (e.g., “it’s” as “it is”), ~10–20 seconds per sentence.
 - Text File: Saves dialogue to `llm_conversation.txt` with correct formatting.
+- In version 2.2.0 the console-output is much more verbose (Prints a lot of debug-info) than earlier versions. All that can be ignored (Including some warning-messages that pop-up talking about soon-to-be-deprecated libraries, as all those are outside of my control since they're not part of my script but some of the dependencies), at least at the time of writing (20250816) where the script works fine on Windows11.
 
 ## Customization
 - **Change Voices**:
@@ -154,7 +172,7 @@ Follow these steps in order to set up the project:
     ```bash
     python -c "from TTS.api import TTS; tts = TTS(model_name='tts_models/en/vctk/vits').to('cpu'); tts.tts_to_file(text='This is a test.', speaker='p226', file_path='test_p226.wav')"
     ```
-  - For Chatterbox TTS; Change file-names in the script so they match the name of the wave-files with the voice-snippets you want to clone:
+  - For Chatterbox TTS; Change file-names in the script so they match the name of the wave-files with the voice-snippets you want to clone, or replace the default wav-files with your own voice-recordings:
     ```python
     self.voice_female = "voice_female.wav"
     self.voice_male = "voice_male.wav"
@@ -168,7 +186,7 @@ Follow these steps in order to set up the project:
   - Update system prompts for different perspectives, e.g.:
     ```python
     SYSTEM_PROMPT_1 = "You are the wife in the relationship."
-    SYSTEM_PROMPT_2 = "You are the husbond in the relationship."
+    SYSTEM_PROMPT_2 = "You are the husband in the relationship."
     ```
   - In the new GPU-script it's moved to `self.history` 1 (Female, first speaker) and 2 (Male, second speaker), e.g.:
     ```python
@@ -189,6 +207,7 @@ Follow these steps in order to set up the project:
     python -c "import simpleaudio; wave_obj = simpleaudio.WaveObject.from_wave_file('output.wav'); play_obj = wave_obj.play(); play_obj.wait_done()"
     ```
   - Check `coqui-tts==0.26.2` and `torch==2.7.1`: `pip list`.
+  - Make sure pygame is installed (See higher up in this text)
 - **Ollama Errors**:
   - Ensure Ollama is running: `curl http://localhost:11434/api/tags`.
   - Reinstall `gemma3:4b`: `ollama pull gemma3:4b`.
@@ -200,7 +219,8 @@ Follow these steps in order to set up the project:
   - Share console output, GUI text, or errors via GitHub Issues if problems occur (Hopefully somebody smarter than me can then help. Or you can show the problem to an LLM and see if it can guide you further)
 
 ## Contributing
-Feel free to fork the repository, make improvements, and submit pull requests. Report issues via [GitHub Issues](https://github.com/JELSTUDIO/JEL_LLMradiotheater_Ollama/issues).
+Feel free to fork the repository or make suggestions for improvements. Report issues via [GitHub Issues](https://github.com/JELSTUDIO/JEL_LLMradiotheater_Ollama/issues).
 
 ## License
 MIT License. See [LICENSE](LICENSE) for details.
+(Be aware the NASA-version has its own license. See the NASA folder for that)
