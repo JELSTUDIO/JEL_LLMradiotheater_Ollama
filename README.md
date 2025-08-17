@@ -82,7 +82,7 @@ Follow these steps in order to set up the project:
      ```bash
      pip3 install chatterbox-tts
      ```
-   - To use version 2.2.0 (Or the specific NASA version, which is version 2.1.0) you must also install this new sound-engine (Still with the VENV active). This switches the audio playback system from simpleaudio to pygame, which is required for the new sound-effects to work. If you ONLY want to use version 2.0.0, which is the Coqui-TTS version (Without Chatterbox support), then you can skip this step:
+   - To use version 2.2.0 (Or the specific NASA version, which is version 2.1.0) you must also install this new sound-engine (Still with the VENV active). This switches the audio playback system from simpleaudio to pygame, which is required for the new sound-effects to work. If you ONLY want to use version 1.0.0, which is the Coqui-TTS version (Without Chatterbox support), then you can skip this step:
      ```bash
      pip3 install pygame
      ```
@@ -130,11 +130,11 @@ Follow these steps in order to set up the project:
    ```
 
 3. **Run the Script** (This is done in the VENV activated CMD console window. And be patient as it may take some time to load the LLM and, when using Chatterbox, generate the speeches. On first run you should check the CMD console window to see if you need to accept the TTS license):
-   - This is for the CPU-based Coqui TTS, version 2.0.0, run:
+   - This is for the CPU-based Coqui TTS, version 1.0.0, run:
      ```bash
      python llm_radio_theater_CPUonly_Example_HusbondAndWife.py
      ```
-   - For the version 2.1.0 GPU-based Chatterbox TTS, run:
+   - For the version 2.0.0 GPU-based Chatterbox TTS, run:
      ```bash
      python llm_radio_theater_GPU_Example_HusbondAndWife.py
      ```
