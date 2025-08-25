@@ -4,7 +4,7 @@ JEL LLM Radio Theater is a Python application that creates a dynamic, spoken dia
 
 Demo podcasts using this script:
 
-[![Demo podcasts](https://redcircle.com/_next/image?url=https%3A%2F%2Fmedia.redcircle.com%2Fimages%2F2025%2F8%2F19%2F20%2Fc4b220a8-e6af-4abc-843c-3a552a4eba8b_00_-_grumpy_man_vs_llm_-_cover_1568_2.jpg&w=384&q=75)](https://redcircle.com/shows/c2f971d0-bd6f-4c1d-8291-72644724c366)
+[![Demo podcasts](https://jelstudio.dk/Podcasts/GrumpyManVsLLM_cover392%5E2.png)](https://redcircle.com/shows/c2f971d0-bd6f-4c1d-8291-72644724c366)
 
 
 ## New in v2.3.0 (The latest version)
@@ -234,3 +234,4 @@ Feel free to fork the repository or make suggestions for improvements. Report is
 ## License
 MIT License. See [LICENSE](LICENSE) for details.
 (Be aware the NASA-version has its own license. See the NASA folder for that)
+
