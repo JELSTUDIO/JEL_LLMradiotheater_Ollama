@@ -171,10 +171,10 @@ class LLMDuetApp:
 
         # TTS settings for each speaker. Default value is 0.5 for both values
         # these defaults are for the default voices
-        #self.exaggeration_1 = 0.75  # GreenLLM: how expressive
-        #self.cfg_weight_1 = 0.3    # GreenLLM: pacing
-        #self.exaggeration_2 = 0.85   # BlueLLM: how expressive
-        #self.cfg_weight_2 = 0.1     # BlueLLM: pacing
+        self.exaggeration_1 = 0.75  # GreenLLM: how expressive
+        self.cfg_weight_1 = 0.3    # GreenLLM: pacing
+        self.exaggeration_2 = 0.85   # BlueLLM: how expressive
+        self.cfg_weight_2 = 0.1     # BlueLLM: pacing
 
         # TTS settings for each speaker. Default value is 0.5 for both values
         # these defaults are for my own voices
@@ -184,8 +184,8 @@ class LLMDuetApp:
         #self.cfg_weight_2 = 0.05     # BlueLLM: pacing
 
         # Default Voice clone files (ensure these files exist in the working directory)
-        #self.voice_female = "voice_female.wav"
-        #self.voice_male = "voice_male.wav"
+        self.voice_female = "voice_female.wav"
+        self.voice_male = "voice_male.wav"
 
 
 
@@ -213,17 +213,17 @@ class LLMDuetApp:
         #self.cfg_weight_1 = 0.25    # GreenLLM: pacing
 
         #self.voice_female = r"D:\AI\JEL_LLMradiotheater_Ollama\voices\ArianeRibeiro_Portuguese-female.wav"
-        self.voice_female = r"D:\AI\JEL_LLMradiotheater_Ollama\voices\MargaretEspaillat_(Female-VeryClearSound).wav"
-        self.exaggeration_1 = 1.0   # how expressive
-        self.cfg_weight_1 = 1.0     # pacing
+        #self.voice_female = r"D:\AI\JEL_LLMradiotheater_Ollama\voices\MargaretEspaillat_(Female-VeryClearSound).wav"
+        #self.exaggeration_1 = 1.0   # how expressive
+        #self.cfg_weight_1 = 1.0     # pacing
 
         #Green LLM above
 
         #Blue LLM below
 
-        self.voice_male = "LeonardWilson(1930-2024)_RX9JEL_24K32B_PodcastReady_-24dB.wav"
-        self.exaggeration_2 = 0.95   # how expressive
-        self.cfg_weight_2 = 0.05     # pacing
+        #self.voice_male = "LeonardWilson(1930-2024)_RX9JEL_24K32B_PodcastReady_-24dB.wav"
+        #self.exaggeration_2 = 0.95   # how expressive
+        #self.cfg_weight_2 = 0.05     # pacing
 
 
 
