@@ -2,6 +2,11 @@
 
 JEL LLM Radio Theater is a Python application that creates a dynamic, spoken dialogue between two AI characters using the Ollama language model (`gemma3:4b`) and either Coqui TTS (`tts_models/en/vctk/vits`) or Chatterbox TTS with voice-cloning. The characters engage in a conversational debate, with one embodying a female perspective (And female voice) and the other a male perspective (And male voice). If you use Chatterbox you can use wave-files to have two of your own voices used. The dialogue is displayed in a Tkinter GUI, spoken aloud via text-to-speech, and saved to a text file (`llm_conversation.txt`).
 
+Demo podcasts using this script:
+
+[![Demo podcasts](https://redcircle.com/_next/image?url=https%3A%2F%2Fmedia.redcircle.com%2Fimages%2F2025%2F8%2F19%2F20%2Fc4b220a8-e6af-4abc-843c-3a552a4eba8b_00_-_grumpy_man_vs_llm_-_cover_1568_2.jpg&w=384&q=75)](https://redcircle.com/shows/c2f971d0-bd6f-4c1d-8291-72644724c366)
+
+
 ## New in v2.3.0 (The latest version)
 - File-name of the latest version of the script, which uses Chatterbox TTS for the spoken voices: `llm_radio_theater_v2.3.0_Chatterbox.py`
 - GUI updated with a speech timer function (You define the length, in seconds, in the init-section of the script) so you can now choose if auto-wrap should begin after the real-time or the accumulated-time has been reached. Realtime keeps the script going for the defined time, while accumulated runs the script until the combined time of the generated speech has reached the defined time. The default in v2.3.0 is 25 minutes of accumulated time, making this version suitable for exporting shows of a specific length regardless of how slow or fast the computer is at generating the text and speech (The length of the auto-wrap sequence, which is always determined by the specific models used and what they decide to say during the end-sequence, will add to this time)
