@@ -7,7 +7,106 @@ Demo podcasts using this script:
 [![Demo podcasts](https://jelstudio.dk/Podcasts/GrumpyManVsLLM_cover392%5E2.png)](https://redcircle.com/shows/c2f971d0-bd6f-4c1d-8291-72644724c366)
 
 
-## New in v2.3.0 (The latest version)
+## New in v2.3.6 (The latest version, multi-lingual Chatterbox)
+- File-name of the latest version of the script, which uses Chatterbox TTS (Multi-lingual capable but set for English. You can modify the script for other languages yourself) for the spoken voices: `v2.3.6_Multilingual(English)GithubExample.py`
+- The auto-wrap logic has been improved so each LLM is made sure to get their turn at wrapping up the conversation.
+- Font-size on GUI is reduced slightly.
+- The saved transcript text-file is cleared every time the GUI is first run, so only the current conversation is saved (Copy the file, or rename it, if you want to keep a copy of a conversation)
+- The folder where the wave-files output are saved is emptied every time the GUI is first run, so only wave-files for the current conversation are saved (Copy the wave-files to a different folder if you want to keep them)
+- The context-window length has been raised to ~75% of 4096 tokens, since 4096 appears to be the default context-length in Ollama server (A value of 13,000 characters was chosen, but it's just a rough guestimate of the actual token-length)
+- To manipulate the story, adjust the prompts on these lines in the script: Main prompts begin on line 145. Start-prompts begin on line 163. Turn-switch prompt is on line 601. Wrap-prompt is on line 852. Outro-prompt is on line 898 (The outro-prompt is just a text showing up in the GUI after the conversation ends. It is set up so it CAN also be spoken, but it isn't currently speech-activated in this version of the script)
+- You no longer have to use the special Ollama server, but can use the normal Ollama (The one with the GUI that have the white Ollama icon in the Windows task-bar. Just close the Ollama GUI first if it's open. If you're using a larger context-length than 4096 in your Ollama-GUI settings, then remember the script is hardcoded to 4096, so edit the script if you want a longer context-window)
+- My personal opinion on the new multi-lingual version of Chatterbox is that it is NOT as good as the English-only version :/ (The English-only version has commit-hash: revision="1b475dffa71fb191cb6d5901215eb6f55635a9b6" (Short: 1b475df) and has superior speech-quality in my tests so far) Not even for English! But obviously it can now more accurately pronounce these new languages it supports. It just artifacts much more and doesn't sound as natural or pleasant when speaking as the English-Only version does. And the "exaggeration" and "cfg_weight" settings also doesn't seem to work very well in the new version.
+
+## Installation
+You MUST do these steps to activate the new multi-lingual Chatterbox! If you already have LLM theater installed then begin at step 03. If you only want to use the Coqui-TTS version then look further below for older installation-instructions. If you run into errors not mentioned here, then try copying the error from the CMD-window and paste it into an LLM and ask it for advice (Because your hardware may not be the same as mine or things like drivers and Windows-updates and what-not may change in a week or 2 that breaks something unexpectedly. Who knows... :) ):
+
+1. **Clone the Repository** (or download as a ZIP):
+   ```bash
+   git clone https://github.com/JELSTUDIO/JEL_LLMradiotheater_Ollama.git
+   cd JEL_LLMradiotheater_Ollama
+   ```
+
+2. **Create a Virtual Environment**:
+   ```bash
+   python -m venv venv
+   ```
+
+3. **Activate the Virtual Environment**:
+   ```bash
+   venv\Scripts\activate
+   ```
+
+4. **Update PIP**:
+   ```bash
+   python.exe -m pip install --upgrade pip
+   ```
+
+5. **Install requirement**:
+   ```bash
+   pip install numpy
+   ```
+
+6. **Install requirement**:
+   ```bash
+   pip install gruut
+   ```
+
+7. **Install requirement**:
+   ```bash
+   pip install networkx
+   ```
+
+8. **Install requirement**:
+   ```bash
+   pip install pygame
+   ```
+
+9. **Install requirement**:
+   ```bash
+   pip install requests
+   ```
+
+10 A. **Install requirement if you want to use CPU**:
+   ```bash
+   pip install torch torchaudio
+   ```
+
+10 B. **Uninstall requirement if you want to use RTX50-series GPU and have already installed the CPU based torch (Reply YES both times when asked if you want to uninstall) and then proceed to step 10C**:
+   ```bash
+   pip uninstall torch torchaudio
+   ```
+
+10 C. **Install requirement if you want to use RTX50-series GPU and have Cuda-toolkit 12.8**:
+   ```bash
+   pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu128
+   ```
+
+11. **Install requirement (If this does NOT install without error, go to step 12)**:
+   ```bash
+   pip install chatterbox-tts
+   ```
+
+12. **Install requirement (ONLY do this if step 11 did NOT install without error)**:
+   ```bash
+   pip install numpy setuptools wheel
+   ```
+
+13. **Install requirement (ONLY do this if you had to do step 12)**:
+   ```bash
+   pip install chatterbox-tts
+   ```
+
+14. **Run the LLM theater (It will download a few gigabytes of models on first run, so just wait until the GUI opens. When the GUI is open press the START button to begin. Be patient as Ollama must load the chosen LLM-model and Chatterbox must generate the text-content into spoken audio. The speed depends on your computer and GPU speed)**:
+   ```bash
+   python v2.3.6_Multilingual(English)GithubExample.py
+   ```
+
+
+
+
+
+## New in v2.3.0 (The English-only version)
 - File-name of the latest version of the script, which uses Chatterbox TTS for the spoken voices: `llm_radio_theater_v2.3.0_Chatterbox.py`
 - GUI updated with a speech timer function (You define the length, in seconds, in the init-section of the script) so you can now choose if auto-wrap should begin after the real-time or the accumulated-time has been reached. Realtime keeps the script going for the defined time, while accumulated runs the script until the combined time of the generated speech has reached the defined time. The default in v2.3.0 is 25 minutes of accumulated time, making this version suitable for exporting shows of a specific length regardless of how slow or fast the computer is at generating the text and speech (The length of the auto-wrap sequence, which is always determined by the specific models used and what they decide to say during the end-sequence, will add to this time)
 - I added a direct-link to one of my music-videos on Youtube. It's at the bottom of the GUI. If you click it it will open your default browser and go direct to the music-video on Youtube. It's the official music-video for "A No Name Angel - Sad Song", which I think came out very well and beautiful (My Youtube-channel is not monetized, at the time of writing this at least (August 2025), but the song does earn royalties if you watch it. Thank you :) )
