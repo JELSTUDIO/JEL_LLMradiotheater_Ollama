@@ -7,19 +7,28 @@ Demo podcasts using this script:
 [![Demo podcasts](https://jelstudio.dk/Podcasts/GrumpyManVsLLM_cover392%5E2.png)](https://redcircle.com/shows/c2f971d0-bd6f-4c1d-8291-72644724c366)
 
 
-## New in v2.3.6 (The latest version, multi-lingual Chatterbox)
+## New in v2.3.7 (The latest version, multi-lingual Chatterbox)
 - File-name of the latest version of the script, which uses Chatterbox TTS (Multi-lingual capable but set for English. You can modify the script for other languages yourself) for the spoken voices: `v2.3.6_Multilingual(English)GithubExample.py`
+
 - The auto-wrap logic has been improved so each LLM is made sure to get their turn at wrapping up the conversation.
+
 - Font-size on GUI is reduced slightly.
+
 - The saved transcript text-file is cleared every time the GUI is first run, so only the current conversation is saved (Copy the file, or rename it, if you want to keep a copy of a conversation)
+
 - The folder where the wave-files output are saved is emptied every time the GUI is first run, so only wave-files for the current conversation are saved (Copy the wave-files to a different folder if you want to keep them)
-- The context-window length has been raised to ~75% of 4096 tokens, since 4096 appears to be the default context-length in Ollama server (A value of 13,000 characters was chosen, but it's just a rough guestimate of the actual token-length)
+
+- The context-window length has been raised to 80% of 4096 tokens, since 4096 appears to be the default context-length in Ollama server (A value of 3,200 tokens was chosen, but it's just a rough guestimate of the actual token-length. Specifically this value defines the number of characters allowed in the sliding context-window being sent to the LLMs during conversation, and is 12,800 characters exactly. The script will auto-calculate how many previous replies can be maintained within any single context-window and adjust it to the largest possible that still fits within 12,800 characters. It's always split where a new turn begins, in an attempt to avoid the 2 LLMs getting confused about who said what during the conversation. Sometimes they still do, but this also depends on which model is being used, as not all are trained equally. The gemma3:12b model seems fairly good at maintaining awareness of multi-turn dialogue so the 2 speakers stay in character. But if the context-window over-flows, exceeding what Ollama allows, thus cutting the text at an arbitrary location, then the models quickly mix up who is who and start speaking for each other. So setting this value is a balancing-act :) )
+
 - To manipulate the story, adjust the prompts on these lines in the script: Main prompts begin on line 145. Start-prompts begin on line 163. Turn-switch prompt is on line 601. Wrap-prompt is on line 852. Outro-prompt is on line 898 (The outro-prompt is just a text showing up in the GUI after the conversation ends. It is set up so it CAN also be spoken, but it isn't currently speech-activated in this version of the script)
-- You no longer have to use the special Ollama server, but can use the normal Ollama (The one with the GUI that have the white Ollama icon in the Windows task-bar. Just close the Ollama GUI first if it's open. If you're using a larger context-length than 4096 in your Ollama-GUI settings, then remember the script is hardcoded to 4096, so edit the script if you want a longer context-window)
+
+- You no longer HAVE to use the special Ollama server, though you still can if you prefer, but can use the normal Ollama (The one with the GUI that have the white Ollama icon in the Windows task-bar. Just close the Ollama GUI first if it's open. If you're using a larger context-length than 4096 in your Ollama-GUI settings, then remember the script is hardcoded to 3200, so edit the script if you want a longer context-window)
+
 - My personal opinion on the new multi-lingual version of Chatterbox is that it is NOT as good as the English-only version :/ (The English-only version has commit-hash: revision="1b475dffa71fb191cb6d5901215eb6f55635a9b6" (Short: 1b475df) and has superior speech-quality in my tests so far) Not even for English! But obviously it can now more accurately pronounce these new languages it supports. It just artifacts much more and doesn't sound as natural or pleasant when speaking as the English-Only version does. And the "exaggeration" and "cfg_weight" settings also doesn't seem to work very well in the new version.
 
+
 ## Installation
-You MUST do these steps to activate the new multi-lingual Chatterbox! If you already have LLM theater installed then begin at step 03. If you only want to use the Coqui-TTS version then look further below for older installation-instructions. If you run into errors not mentioned here, then try copying the error from the CMD-window and paste it into an LLM and ask it for advice (Because your hardware may not be the same as mine or things like drivers and Windows-updates and what-not may change in a week or 2 that breaks something unexpectedly. Who knows... :) ):
+You MUST do these steps to activate the new multi-lingual Chatterbox! If you already have a previous version of LLM theater installed then begin at step 03 to update all the requirements. If you only want to use the Coqui-TTS version then look further below for older installation-instructions. If you run into errors not mentioned here, then try copying the error from the CMD-window and paste it into an LLM and ask it for advice (Because your hardware may not be the same as mine or things like drivers and Windows-updates and what-not may change in a week or 2 that breaks something unexpectedly. Who knows... :) ):
 
 1. **Clone the Repository** (or download as a ZIP):
    ```bash
