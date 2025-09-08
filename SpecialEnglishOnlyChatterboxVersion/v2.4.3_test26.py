@@ -82,6 +82,16 @@ Make SURE to mention that THE PEOPLE FROM MARS ARE NOT INVADING!!!
 
 
 
+#This is a hard-coded sentence being spoken at the very end of the story, after Green and Blue have finished. This can be used as a spoken disclaimer or whatever you want. This will be said explicitly as it's written.
+#It currently defaults to English ("en"), but change the language at line-1076 (Danish, for example, is "da")
+#MUST BE BELOW 300 CHARACTERS IN LENGTH FOR CHATTERBOX TO BE ABLE TO SPEAK IT CORRECTLY!
+final_outro_prompt = (
+"""
+All text was unscripted and procedurally generated on the fly by artificial intelligence models. All voices, including mine, were spoken by the Chatterbox text to speech system. The end.
+"""
+)
+
+
 
 
 
@@ -1106,11 +1116,7 @@ class LLMDuetApp:
                     self.wrap_phase = 2
 
                 elif self.wrap_phase == 2 and self.speaker == 0:
-                    final_outro = (
-                        """
-                        All text was unscripted and procedurally generated on the fly by artificial intelligence models. All voices, including mine, were spoken by the Chatterbox text to speech system using legally cloned voices prepared by JELSTUDIO. The end.
-                        """
-                    )
+                    final_outro = final_outro_prompt
                     self.speak(final_outro, self.voice_narrator, "System", 0.5, 0.5)
                     self.append_text(f"\n\n[System Outro]: {final_outro}\n", tag="system")
 
