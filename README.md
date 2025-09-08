@@ -7,7 +7,16 @@ Demo podcasts using this script:
 [![Demo podcasts](https://jelstudio.dk/Podcasts/GrumpyManVsLLM_cover392%5E2.png)](https://redcircle.com/shows/c2f971d0-bd6f-4c1d-8291-72644724c366)
 
 
-## New in v2.3.7 (The latest version, multi-lingual Chatterbox)
+## New in v2.4.3 (The latest version, multi-lingual Chatterbox)
+- File-name of the latest version of the script, which uses Chatterbox TTS (Multi-lingual capable but set for English. You can modify the script for other languages yourself) for the spoken voices: `v2.4.3_Multilingual(English)GithubExample.py`. If you want to use the Chatterbox model that only supports English, then choose this file: `llm_radio_theater_v2.3.0_Chatterbox.py` (Or look into the folder `SpecialEnglishOnlyChatterboxVersion` for a script that is hard-coded to the previous English-Only Chatterbox model, which in my opinion is significantly better sounding)
+
+- All the prompts you need to adjust to guide the conversation are moved to the top of the script to make them easy to edit quickly.
+
+- The way context is shared between the models during conversation is now output as text-files in the same folder where audio and transcript is saved. This folder is being emptied when you start the script, so if you want to save audio and transcript make sure to copy or move them to a different folder before running the script!
+
+
+
+## New in v2.3.7 (multi-lingual Chatterbox)
 - File-name of the latest version of the script, which uses Chatterbox TTS (Multi-lingual capable but set for English. You can modify the script for other languages yourself) for the spoken voices: `v2.3.6_Multilingual(English)GithubExample.py`
 
 - The auto-wrap logic has been improved so each LLM is made sure to get their turn at wrapping up the conversation.
