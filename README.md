@@ -7,124 +7,23 @@ Demo podcasts using this script:
 [![Demo podcasts](https://jelstudio.dk/Podcasts/GrumpyManVsLLM_cover392%5E2.png)](https://redcircle.com/shows/c2f971d0-bd6f-4c1d-8291-72644724c366)
 
 
-## New in v2.4.3 (The latest version, multi-lingual Chatterbox)
-- File-name of the latest version of the script, which uses Chatterbox TTS (Multi-lingual capable but set for English. You can modify the script for other languages yourself) for the spoken voices: `v2.4.3_Multilingual(English)GithubExample.py`. If you want to use the Chatterbox model that only supports English, then choose this file: `llm_radio_theater_v2.3.0_Chatterbox.py` (Or look into the folder `SpecialEnglishOnlyChatterboxVersion` for a script that is hard-coded to the previous English-Only Chatterbox model, which in my opinion is significantly better sounding)
+## New in v2.4.6 (The latest version) - Chatterbox - MultiLingual and SingleLingual
+- File-name of the latest multi-language version of the script, which uses the latest Chatterbox TTS for the spoken voices: `v2.4.6_MultiLingual(English)GithubExample.py`
+- File-name of the latest single-language version of the script, which uses the latest Chatterbox TTS for the spoken voices: `v2.4.6_SingleLingual(English)GithubExample.py`
+- Both scripts will auto-update Chatterbox if there is a newer version available on Huggingface.
+- The 3 voice-definitions have been moved up just under the prompts, which are at the top of the script, so they are easy to edit without having to look through lots of code.
+- The 2 versions differ only in how they load Chatterbox. The single-lingual can only speak English and appears to have better handling of vocals (Both in terms of cloning and rendering quality, but also in how it handles the script-settings for "exaggeration" and "cfg_weight") than the multi-lingual. The multi-lingual does, however, support a range of languages, but does, in my personal opinion, not sound as good as the single-lingual. But both versions handle the LLM-conversation part exactly the same way (It's only the Chatterbox-models that differ). Both scripts will load the latest available Chatterbox-version (Both for the multi- and single- language version of the script) and do not use the previous English-Only version of Chatterbox (Which you can find in the special sub-folder named: `SpecialEnglishOnlyChatterboxVersion`)
+- The context-logic was updated in an attempt to make it easier for the 2 LLM-models to track their turns in a conversation and stay in character (It's still not perfect and some models perform better than others, but I think it's about as good as I can get it now)
 
-- All the prompts you need to adjust to guide the conversation are moved to the top of the script to make them easy to edit quickly.
+## New in v2.4.3 - Chatterbox - MultiLingual
+- File-name of this version of the script, which uses Chatterbox TTS for the spoken voices: `llm_radio_theater_v2.3.0_Chatterbox.py`
+- Supports multiple languages in Chatterbox (See script for which languages)
+- Moved all the prompts in the script to the top so they are easier to edit when wanting to create new conversations.
+- The transcript text-file is now saved in the same folder as the audio-files.
+- Text-files showing the actual context-window each LLM sees before composing their replies are also saved in that folder.
+- I added a direct-link to one of my music-videos on Youtube. It's at the bottom of the GUI. If you click it it will open your default browser and go direct to the music-video on Youtube. It's the official music-video for "A No Name Angel - Sad Song", which I think came out very well and beautiful (My Youtube-channel is not monetized, at the time of writing this at least (August 2025), but the song does earn royalties if you watch it. Thank you :) )
 
-- The way context is shared between the models during conversation is now output as text-files in the same folder where audio and transcript is saved. This folder is being emptied when you start the script, so if you want to save audio and transcript make sure to copy or move them to a different folder before running the script!
-
-
-
-## New in v2.3.7 (multi-lingual Chatterbox)
-- File-name of the latest version of the script, which uses Chatterbox TTS (Multi-lingual capable but set for English. You can modify the script for other languages yourself) for the spoken voices: `v2.3.6_Multilingual(English)GithubExample.py`
-
-- The auto-wrap logic has been improved so each LLM is made sure to get their turn at wrapping up the conversation.
-
-- Font-size on GUI is reduced slightly.
-
-- The saved transcript text-file is cleared every time the GUI is first run, so only the current conversation is saved (Copy the file, or rename it, if you want to keep a copy of a conversation)
-
-- The folder where the wave-files output are saved is emptied every time the GUI is first run, so only wave-files for the current conversation are saved (Copy the wave-files to a different folder if you want to keep them)
-
-- The context-window length has been raised to 80% of 4096 tokens, since 4096 appears to be the default context-length in Ollama server (A value of 3,200 tokens was chosen, but it's just a rough guestimate of the actual token-length. Specifically this value defines the number of characters allowed in the sliding context-window being sent to the LLMs during conversation, and is 12,800 characters exactly. The script will auto-calculate how many previous replies can be maintained within any single context-window and adjust it to the largest possible that still fits within 12,800 characters. It's always split where a new turn begins, in an attempt to avoid the 2 LLMs getting confused about who said what during the conversation. Sometimes they still do, but this also depends on which model is being used, as not all are trained equally. The gemma3:12b model seems fairly good at maintaining awareness of multi-turn dialogue so the 2 speakers stay in character. But if the context-window over-flows, exceeding what Ollama allows, thus cutting the text at an arbitrary location, then the models quickly mix up who is who and start speaking for each other. So setting this value is a balancing-act :) )
-
-- To manipulate the story, adjust the prompts on these lines in the script: Main prompts begin on line 145. Start-prompts begin on line 163. Turn-switch prompt is on line 601. Wrap-prompt is on line 852. Outro-prompt is on line 898 (The outro-prompt is just a text showing up in the GUI after the conversation ends. It is set up so it CAN also be spoken, but it isn't currently speech-activated in this version of the script)
-
-- You no longer HAVE to use the special Ollama server, though you still can if you prefer, but can use the normal Ollama (The one with the GUI that have the white Ollama icon in the Windows task-bar. Just close the Ollama GUI first if it's open. If you're using a larger context-length than 4096 in your Ollama-GUI settings, then remember the script is hardcoded to 3200, so edit the script if you want a longer context-window)
-
-- My personal opinion on the new multi-lingual version of Chatterbox is that it is NOT as good as the English-only version :/ (The English-only version has commit-hash: revision="1b475dffa71fb191cb6d5901215eb6f55635a9b6" (Short: 1b475df) and has superior speech-quality in my tests so far) Not even for English! But obviously it can now more accurately pronounce these new languages it supports. It just artifacts much more and doesn't sound as natural or pleasant when speaking as the English-Only version does. And the "exaggeration" and "cfg_weight" settings also doesn't seem to work very well in the new version.
-
-
-## Installation
-You MUST do these steps to activate the new multi-lingual Chatterbox! If you already have a previous version of LLM theater installed then begin at step 03 to update all the requirements. If you only want to use the Coqui-TTS version then look further below for older installation-instructions. If you run into errors not mentioned here, then try copying the error from the CMD-window and paste it into an LLM and ask it for advice (Because your hardware may not be the same as mine or things like drivers and Windows-updates and what-not may change in a week or 2 that breaks something unexpectedly. Who knows... :) ):
-
-1. **Clone the Repository** (or download as a ZIP):
-   ```bash
-   git clone https://github.com/JELSTUDIO/JEL_LLMradiotheater_Ollama.git
-   cd JEL_LLMradiotheater_Ollama
-   ```
-
-2. **Create a Virtual Environment**:
-   ```bash
-   python -m venv venv
-   ```
-
-3. **Activate the Virtual Environment**:
-   ```bash
-   venv\Scripts\activate
-   ```
-
-4. **Update PIP**:
-   ```bash
-   python.exe -m pip install --upgrade pip
-   ```
-
-5. **Install requirement**:
-   ```bash
-   pip install numpy
-   ```
-
-6. **Install requirement**:
-   ```bash
-   pip install gruut
-   ```
-
-7. **Install requirement**:
-   ```bash
-   pip install networkx
-   ```
-
-8. **Install requirement**:
-   ```bash
-   pip install pygame
-   ```
-
-9. **Install requirement**:
-   ```bash
-   pip install requests
-   ```
-
-10 A. **Install requirement if you want to use CPU**:
-   ```bash
-   pip install torch torchaudio
-   ```
-
-10 B. **Uninstall requirement if you want to use RTX50-series GPU and have already installed the CPU based torch (Reply YES both times when asked if you want to uninstall) and then proceed to step 10C**:
-   ```bash
-   pip uninstall torch torchaudio
-   ```
-
-10 C. **Install requirement if you want to use RTX50-series GPU and have Cuda-toolkit 12.8**:
-   ```bash
-   pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu128
-   ```
-
-11. **Install requirement (If this does NOT install without error, go to step 12)**:
-   ```bash
-   pip install chatterbox-tts
-   ```
-
-12. **Install requirement (ONLY do this if step 11 did NOT install without error)**:
-   ```bash
-   pip install numpy setuptools wheel
-   ```
-
-13. **Install requirement (ONLY do this if you had to do step 12)**:
-   ```bash
-   pip install chatterbox-tts
-   ```
-
-14. **Run the LLM theater (It will download a few gigabytes of models on first run, so just wait until the GUI opens. When the GUI is open press the START button to begin. Be patient as Ollama must load the chosen LLM-model and Chatterbox must generate the text-content into spoken audio. The speed depends on your computer and GPU speed)**:
-   ```bash
-   python v2.3.6_Multilingual(English)GithubExample.py
-   ```
-
-
-
-
-
-## New in v2.3.0 (The English-only version)
+## New in v2.3.0 - Chatterbox - SingleLingual
 - File-name of the latest version of the script, which uses Chatterbox TTS for the spoken voices: `llm_radio_theater_v2.3.0_Chatterbox.py`
 - GUI updated with a speech timer function (You define the length, in seconds, in the init-section of the script) so you can now choose if auto-wrap should begin after the real-time or the accumulated-time has been reached. Realtime keeps the script going for the defined time, while accumulated runs the script until the combined time of the generated speech has reached the defined time. The default in v2.3.0 is 25 minutes of accumulated time, making this version suitable for exporting shows of a specific length regardless of how slow or fast the computer is at generating the text and speech (The length of the auto-wrap sequence, which is always determined by the specific models used and what they decide to say during the end-sequence, will add to this time)
 - I added a direct-link to one of my music-videos on Youtube. It's at the bottom of the GUI. If you click it it will open your default browser and go direct to the music-video on Youtube. It's the official music-video for "A No Name Angel - Sad Song", which I think came out very well and beautiful (My Youtube-channel is not monetized, at the time of writing this at least (August 2025), but the song does earn royalties if you watch it. Thank you :) )
@@ -351,4 +250,3 @@ Feel free to fork the repository or make suggestions for improvements. Report is
 ## License
 MIT License. See [LICENSE](LICENSE) for details.
 (Be aware the NASA-version has its own license. See the NASA folder for that)
-
