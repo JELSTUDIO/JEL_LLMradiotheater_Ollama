@@ -27,7 +27,7 @@ Replace them with the 2 updated files included here in `SpecialEnglishOnlyChatte
 ## Manually editing the 2 VENV Chatterbox files
 Follow these steps if you edit the 2 files manually:
 
-0. **Make sure you only edit files in this folder**:
+**Make sure you only edit files in this folder**:
    - The local VENV of JEL's LLM-RadioTheater (This will not affect other Chatterbox-installations):
      ```
      `JEL_LLMradiotheater_Ollama\venv\Lib\site-packages\chatterbox`
@@ -71,13 +71,18 @@ Follow these steps if you edit the 2 files manually:
      ```
 
 
-## v2.4.3 (The English-Only Chatterbox version)
-Once you've done that you can use this script, which you should edit to define your own conversation-topics and LLM-models used etc:`v2.4.3_test26.py`
+## v2.4.6 (The English-Only Chatterbox version)
+Once you've done that you can use this script, which you should edit to define your own conversation-topics and LLM-models used etc:`v2.4.6_test31.py`
 
 You run it by entering this command in the CMD console window:
      ```
-     python v2.4.3_test26.py
+     python v2.4.6_test31.py
      ```
+
+## New in v2.4.6 (The latest version)
+- All prompts are at the top of the script so you can easily edit them.
+- All 3 voices are also now at the top of the script so you can easily edit them.
+- Context-logic was updated in an attempt to make it easier for the 2 LLM-models to track their turns in a conversation and stay in character (It's still not perfect and some models perform better than others, but I think it's about as good as it can get now)
 
 
 ## License
