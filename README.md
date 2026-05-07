@@ -7,23 +7,12 @@ Demo podcasts using this script:
 [![Demo podcasts](https://jelstudio.dk/Podcasts/GrumpyManVsLLM_cover392%5E2.png)](https://redcircle.com/shows/c2f971d0-bd6f-4c1d-8291-72644724c366)
 
 
-## New in v2.4.6 (The latest version) - Chatterbox - MultiLingual and SingleLingual
-- File-name of the latest multi-language version of the script, which uses the latest Chatterbox TTS for the spoken voices: `v2.4.6_MultiLingual(English)GithubExample.py`
-- File-name of the latest single-language version of the script, which uses the latest Chatterbox TTS for the spoken voices: `v2.4.6_SingleLingual(English)GithubExample.py`
-- Both scripts will auto-update Chatterbox if there is a newer version available on Huggingface.
-- The 3 voice-definitions have been moved up just under the prompts, which are at the top of the script, so they are easy to edit without having to look through lots of code.
-- The 2 versions differ only in how they load Chatterbox. The single-lingual can only speak English and appears to have better handling of vocals (Both in terms of cloning and rendering quality, but also in how it handles the script-settings for "exaggeration" and "cfg_weight") than the multi-lingual. The multi-lingual does, however, support a range of languages, but does, in my personal opinion, not sound as good as the single-lingual. But both versions handle the LLM-conversation part exactly the same way (It's only the Chatterbox-models that differ). Both scripts will load the latest available Chatterbox-version (Both for the multi- and single- language version of the script) and do not use the previous English-Only version of Chatterbox (Which you can find in the special sub-folder named: `SpecialEnglishOnlyChatterboxVersion`)
-- The context-logic was updated in an attempt to make it easier for the 2 LLM-models to track their turns in a conversation and stay in character (It's still not perfect and some models perform better than others, but I think it's about as good as I can get it now)
+## New in v2.5.1 (The latest version)
+- File-name of the latest version of the script, which uses the new Turbo-addition made to Chatterbox TTS version 0.1.7 for the spoken voices: `llm_radio_theater_v2.5.1_ChatterboxTurbo.py`
+- The v2.5.1 script uses the new paralinguistic tags (Such as coughing, laughter, etc) that are possible with the turbo-version. This is defined in the system-prompts for the 2 speakers (Where you can remove them if you don't want them)
+- The v2.5.1 script has a new button called "Play Script", which plays the content of this text-file: `TestSpeech.txt`. Edit this text-file with whatever you want said before running the script.
 
-## New in v2.4.3 - Chatterbox - MultiLingual
-- File-name of this version of the script, which uses Chatterbox TTS for the spoken voices: `llm_radio_theater_v2.3.0_Chatterbox.py`
-- Supports multiple languages in Chatterbox (See script for which languages)
-- Moved all the prompts in the script to the top so they are easier to edit when wanting to create new conversations.
-- The transcript text-file is now saved in the same folder as the audio-files.
-- Text-files showing the actual context-window each LLM sees before composing their replies are also saved in that folder.
-- I added a direct-link to one of my music-videos on Youtube. It's at the bottom of the GUI. If you click it it will open your default browser and go direct to the music-video on Youtube. It's the official music-video for "A No Name Angel - Sad Song", which I think came out very well and beautiful (My Youtube-channel is not monetized, at the time of writing this at least (August 2025), but the song does earn royalties if you watch it. Thank you :) )
-
-## New in v2.3.0 - Chatterbox - SingleLingual
+## New in v2.3.0
 - File-name of the latest version of the script, which uses Chatterbox TTS for the spoken voices: `llm_radio_theater_v2.3.0_Chatterbox.py`
 - GUI updated with a speech timer function (You define the length, in seconds, in the init-section of the script) so you can now choose if auto-wrap should begin after the real-time or the accumulated-time has been reached. Realtime keeps the script going for the defined time, while accumulated runs the script until the combined time of the generated speech has reached the defined time. The default in v2.3.0 is 25 minutes of accumulated time, making this version suitable for exporting shows of a specific length regardless of how slow or fast the computer is at generating the text and speech (The length of the auto-wrap sequence, which is always determined by the specific models used and what they decide to say during the end-sequence, will add to this time)
 - I added a direct-link to one of my music-videos on Youtube. It's at the bottom of the GUI. If you click it it will open your default browser and go direct to the music-video on Youtube. It's the official music-video for "A No Name Angel - Sad Song", which I think came out very well and beautiful (My Youtube-channel is not monetized, at the time of writing this at least (August 2025), but the song does earn royalties if you watch it. Thank you :) )
@@ -106,21 +95,33 @@ Follow these steps in order to set up the project:
      ```
    - Then install Chatterbox (Keep the VENV, that you installed the requirements into, active, so Chatterbox is installed into it) with:
      ```bash
-     pip3 install chatterbox-tts
+     pip install chatterbox-tts
+     ```
+   - To update Chatterbox (ONLY if you already installed the radio-theater previously before the Turbo-version was added to Chatterbox) to support the new Turbo-version (Keep the VENV, that you installed the requirements into, active, so the Chatterbox update is installed into it. Be aware that this may change the two torch-versions installed in the RadioTheater, but you can correct this in step4.1 below after updating Chatterbox) use:
+     ```bash
+     pip install --upgrade chatterbox-tts
+     ```
+   - Then verify which version of Chatterbox you have installed into the RadioTheater (Keep the VENV, that you installed the requirements into, active) use:
+     ```bash
+     pip show chatterbox-tts
      ```
    - To use version 2.2.0 (Or the specific NASA version, which is version 2.1.0) you must also install this new sound-engine (Still with the VENV active). This switches the audio playback system from simpleaudio to pygame, which is required for the new sound-effects to work. If you ONLY want to use version 1.0.0, which is the Coqui-TTS version (Without Chatterbox support), then you can skip this step:
      ```bash
-     pip3 install pygame
+     pip install pygame
      ```
 
 4.1 **Install Dependencies for RXT50 series GPU support** (Skip this 4.1 section if you only want to use CPU):
-   - First uninstall CPU-based torch. Uninstall with:
+   - First uninstall CPU-based torch, or modified torch-versions after Chatterbox-update. Uninstall with:
      ```bash
-     pip3 uninstall torch torchvision torchaudio
+     pip uninstall torch torchvision torchaudio
      ```
    - Then install GPU-based torch. For CUDA 12.8 install with:
      ```bash
-     pip3 install torch torchaudio --index-url https://download.pytorch.org/whl/cu128
+     pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu128
+     ```
+   - To install a GPU-based torch version that is verified (Newer may also work, but this is the version that's been verified. You can safely ignore the errors mentioned after install that Chatterbox requires lower versions, because these ones do work) to work with the new Chatterbox-Turbo for CUDA 13 on an RTX5080 GPU, you can use:
+     ```bash
+     pip install torch==2.11.0 torchaudio==2.11.0 --index-url https://download.pytorch.org/whl/cu130
      ```
 
 5. **Verify Ollama Setup**:
@@ -168,6 +169,10 @@ Follow these steps in order to set up the project:
      ```bash
      python llm_radio_theater_v2.2.0_Chatterbox_GPUandCPU_Example_HusbondAndWife.py
      ```
+   - For the version 2.5.1 GPU-based Chatterbox-Turbo TTS, run:
+     ```bash
+     python llm_radio_theater_v2.5.1_ChatterboxTurbo.py
+     ```
 
 4. **Interact with the GUI**:
    - **Start**: Begins the dialogue between the Woman (pro-living room) and Man (pro-garage).
@@ -175,10 +180,13 @@ Follow these steps in order to set up the project:
    - **Change Topic**: Enter a new topic for the characters to discuss.
    - **TTS: On/Off**: Toggles text-to-speech.
    - **WRAP**: Click this when you want the conversation to begin to wrap up with a natural ending.
-   - **Timer Enforce**: If ON, the script will auto-wrap when the countdown reaches zero. If OFF the script will continue indefinitely (So if a conversation heads in an interesting direction and you want it to continue, click this to OFF to ignore the countdown timer)
-   - **TIMER**: This will count down in seconds to an automatic wrap-up of the conversation so it doesn't continue forever (In the v2.2.0 script it defaults to 3600 seconds, but you can modify this in the .py file)
+   - **Timer Enforced**: If ON, the script will auto-wrap when the countdown reaches zero. If OFF the script will continue indefinitely (So if a conversation heads in an interesting direction and you want it to continue, click this to OFF to ignore the countdown timer)
+   - **Timer Mode**: Choose between speech-time (Use this if you want to generate a speech of a certain final length calculated on the audio alone) or real-time (Use this if you want the script to wrap-up when this much time has passed. This is useful for LIVE-situations and includes the time it takes to generate the speech)
+   - **TIMER**: This will count down in minutes and seconds to an automatic wrap-up of the conversation so it doesn't continue forever (In the v2.5.1 script it defaults to 25 minutes, but you can modify this in the .py file)
+   - **duration**: This will count up in minutes and seconds to show how long the actual conversation is (Based on the audio alone) or how much real-time has progressed.
    - **Chatterbox sliders**: These will adjust how the 2 Chatterbox-voices speaks (How dramatic they sound, and how quick the talk) Adjust them to taste (And if you want you can update the defaults inside the script to your preferred values, as different voices may need different values to sound normal. Chatterbox' internal default values are 0.5 for both sliders, which is the setting that will be the safest against mis-spoken words or 'hallucination-talk')
    - Output appears in the GUI, is spoken aloud, and is saved to `llm_conversation.txt` (In version 2.2.0 the text-file is cleared/emptied when you first run the script so only the latest conversation-transcript is stored. So if you want to keep older conversation-transcripts, make sure to copy this file or its contents before running the script).
+   - **Play Script**: Plays the text in `TestSpeech.txt` (Be patient and do NOT click the button multiple times or it will cue the same text as many times as you click. Just a friendly warning ;) This quasi-bug may or may not be fixed later)
 
 **Expected Output**:
 - Console: Lists `Using device for TTS: cpu` and ~110 VITS speaker IDs (e.g., `p225`, `p231`).
@@ -243,9 +251,6 @@ Follow these steps in order to set up the project:
 - **Logs**:
   - Check `llm_conversation.txt` for dialogue history.
   - Share console output, GUI text, or errors via GitHub Issues if problems occur (Hopefully somebody smarter than me can then help. Or you can show the problem to an LLM and see if it can guide you further)
-
-## Contributing
-Feel free to fork the repository or make suggestions for improvements. Report issues via [GitHub Issues](https://github.com/JELSTUDIO/JEL_LLMradiotheater_Ollama/issues).
 
 ## License
 MIT License. See [LICENSE](LICENSE) for details.
