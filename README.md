@@ -7,7 +7,11 @@ Demo podcasts using this script:
 [![Demo podcasts](https://jelstudio.dk/Podcasts/GrumpyManVsLLM_cover392%5E2.png)](https://redcircle.com/shows/c2f971d0-bd6f-4c1d-8291-72644724c366)
 
 
-## New in v2.5.1 (The latest version)
+## New in v2.7.1 (The latest version)
+- File-name of the latest version of the script, which uses the latest normal English-language version Chatterbox TTS version 0.1.7 for the spoken voices: `llm_radio_theater_v2.7.1_Chatterbox0.1.7.py`
+- The v2.7.1 script now also speaks (Verbatim) the starter-prompt. This prompt is hard-coded in the script (It's used to start the conversation between the 2 AI-models, so re-phrase it to whatever you want that makes sense as a first spoken dialogue in the context of your conversation-theme) so you have to modify it when also modifying the system-prompts for the 2 LLM-speakers. Previously it was omitted because it was always the same short phrase, but for dialogue-coherence it makes more sense to include it in the TTS-output and in the text-transcript output. You simply edit the prompt on line 33, called: `ConversationStarterPrompt`, to whatever you want (It will be spoken by the first TTS-voice exactly as you enter it)
+
+## New in v2.5.1
 - File-name of the latest version of the script, which uses the new Turbo-addition made to Chatterbox TTS version 0.1.7 for the spoken voices: `llm_radio_theater_v2.5.1_ChatterboxTurbo.py`
 - The v2.5.1 script uses the new paralinguistic tags (Such as coughing, laughter, etc) that are possible with the turbo-version. This is defined in the system-prompts for the 2 speakers (Where you can remove them if you don't want them)
 - The v2.5.1 script has a new button called "Play Script", which plays the content of this text-file: `TestSpeech.txt`. Edit this text-file with whatever you want said before running the script.
